@@ -44,7 +44,7 @@ public class MainActivity extends ActionBarActivity {
 
         Context context = this;
         CharSequence text = this.getString(R.string.toast_text);
-        int duration = Toast.LENGTH_LONG;
+        int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
