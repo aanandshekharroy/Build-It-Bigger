@@ -2,6 +2,6 @@ package com.example;
 
 public class JokeWizard {
     public String getJoke(){
-        return "Joke arrived from java library";
+        return "I am a boring person, I dont remember any joke :( ";
     }
 }

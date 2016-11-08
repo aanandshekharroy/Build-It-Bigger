@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.JokeWizard;
@@ -23,11 +24,12 @@ import java.io.IOException;
 
 
 public class MainActivity extends ActionBarActivity {
-
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        progressBar=(ProgressBar)findViewById(R.id.progressBar);
     }
 
 
@@ -54,11 +56,8 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void tellJoke(View view) {
-//        JokeWizard jw=new JokeWizard();
-//        String joke=jw.getJoke();
-
-//        Toast.makeText(this,jw.getJoke() , Toast.LENGTH_SHORT).show();
-        new EndpointsAsyncTask().execute(new Pair<Context, String>(this, "Manfred"));
+        progressBar.setVisibility(View.VISIBLE);
+        new EndpointsAsyncTask(this,progressBar).execute(new Pair<Context, String>(this, "Manfred"));
 
     }
 
@@ -67,6 +66,11 @@ public class MainActivity extends ActionBarActivity {
 class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
+    private ProgressBar progressBar;
+    public EndpointsAsyncTask(Context context, ProgressBar progressBar) {
+        this.context=context;
+        this.progressBar=progressBar;
+    }
 
     @Override
     protected String doInBackground(Pair<Context, String>... params) {
@@ -101,6 +105,7 @@ class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
     @Override
     protected void onPostExecute(String result) {
 //        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+        progressBar.setVisibility(View.GONE);
         Intent jokeIntent=new Intent(context, JokeActivity.class);
         jokeIntent.putExtra("joke",result);
         context.startActivity(jokeIntent);
