@@ -37,4 +37,6 @@ dependencies {
     freeCompile 'com.google.android.gms:play-services-ads:9.6.1'
     compile 'com.google.code.findbugs:jsr305:2.0.1'
     compile project(path: ':backend', configuration: 'android-endpoints')
+    androidTestCompile "org.mockito:mockito-core:1.+"
+
 }
