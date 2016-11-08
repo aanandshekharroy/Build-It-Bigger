@@ -54,11 +54,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void tellJoke(View view) {
-        JokeWizard jw=new JokeWizard();
-        String joke=jw.getJoke();
-        Intent jokeIntent=new Intent(this, JokeActivity.class);
-        jokeIntent.putExtra("joke",joke);
-        startActivity(jokeIntent);
+//        JokeWizard jw=new JokeWizard();
+//        String joke=jw.getJoke();
+
 //        Toast.makeText(this,jw.getJoke() , Toast.LENGTH_SHORT).show();
         new EndpointsAsyncTask().execute(new Pair<Context, String>(this, "Manfred"));
 
@@ -94,7 +92,7 @@ class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
         String name = params[0].second;
 
         try {
-            return myApiService.sayHi(name).execute().getData();
+            return myApiService.getObjectResponse().execute().getJoke();
         } catch (IOException e) {
             return e.getMessage();
         }
@@ -102,7 +100,9 @@ class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
 
     @Override
     protected void onPostExecute(String result) {
-        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
-
+//        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+        Intent jokeIntent=new Intent(context, JokeActivity.class);
+        jokeIntent.putExtra("joke",result);
+        context.startActivity(jokeIntent);
     }
 }
